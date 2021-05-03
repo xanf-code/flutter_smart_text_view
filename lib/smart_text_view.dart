@@ -71,7 +71,7 @@ final _linkRegex = RegExp(
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 final _userTagRegex = RegExp(r"\B@\w*[a-zA-Z]+\w*", caseSensitive: false);
-final _dollarRegex = RegExp(r'\B$\w*[a-zA-Z]+\w*', caseSensitive: false);
+final _dollarRegex = RegExp(r"\$(\w+)", caseSensitive: false);
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
