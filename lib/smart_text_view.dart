@@ -69,9 +69,9 @@ class TextElement extends SmartTextElement {
 final _linkRegex = RegExp(
     r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)",
     caseSensitive: false);
-final _tagRegex = RegExp(r"\B$\w*[a-zA-Z]+\w*", caseSensitive: false);
+final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 final _userTagRegex = RegExp(r"\B@\w*[a-zA-Z]+\w*", caseSensitive: false);
-final _dollarRegex = RegExp(r"\B$\w*[a-zA-Z]+\w*", caseSensitive: false);
+final _dollarRegex = RegExp(r"\B$\w*[a-zA-Z]+\w*", caseSensitive: true);
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
@@ -241,7 +241,7 @@ class SmartText extends StatelessWidget {
               .copyWith(
                 color: Colors.blueAccent,
               )
-              .merge(dollarStyle),
+              .merge(linkStyle),
           onOpen: onOpen,
           onTagClick: onTagClick,
           onUserTagClick: onUserTagClick),
