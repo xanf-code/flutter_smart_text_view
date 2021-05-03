@@ -199,14 +199,14 @@ class SmartText extends StatelessWidget {
           text: element.tag,
           style: tagStyle,
           onPressed: () => _onTagClick(element.tag),
-            );
-          } else if (element is UserTagElement) {
-            return LinkTextSpan(
-              text: element.tag,
-              style: tagStyle,
-              onPressed: () => _onUserTagClick(element.tag),
-            );
-          }
+        );
+      } else if (element is UserTagElement) {
+        return LinkTextSpan(
+          text: element.tag,
+          style: tagStyle,
+          onPressed: () => _onUserTagClick(element.tag),
+        );
+      }
     }).toList());
   }
 
