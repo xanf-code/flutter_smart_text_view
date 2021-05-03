@@ -130,6 +130,9 @@ class SmartText extends StatelessWidget {
   /// Callback for tapping a hashtag
   final StringCallback onTagClick;
 
+  /// Callback for tapping a hashtag
+  final StringCallback onDollarClick;
+
   /// Callback for tapping a user tag
   final StringCallback onUserTagClick;
 
@@ -142,6 +145,7 @@ class SmartText extends StatelessWidget {
       this.onOpen,
       this.onTagClick,
       this.dollarStyle,
+      this.onDollarClick,
       this.onUserTagClick})
       : super(key: key);
 
@@ -153,6 +157,7 @@ class SmartText extends StatelessWidget {
       TextStyle tagStyle,
       TextStyle dollarStyle,
       StringCallback onOpen,
+      StringCallback onDollarClick,
       StringCallback onTagClick,
       StringCallback onUserTagClick}) {
     void _onOpen(String url) {
@@ -164,6 +169,12 @@ class SmartText extends StatelessWidget {
     void _onTagClick(String tag) {
       if (onTagClick != null) {
         onTagClick(tag);
+      }
+    }
+
+    void _onDollarClick(String dollar) {
+      if (onDollarClick != null) {
+        _onDollarClick(dollar);
       }
     }
 
@@ -186,7 +197,7 @@ class SmartText extends StatelessWidget {
         return LinkTextSpan(
           text: element.dollar,
           style: dollarStyle,
-          onPressed: () => _onOpen(element.dollar),
+          onPressed: () => _onDollarClick(element.dollar),
         );
       } else if (element is LinkElement) {
         return LinkTextSpan(
@@ -242,6 +253,7 @@ class SmartText extends StatelessWidget {
                 color: Colors.blueAccent,
               )
               .merge(linkStyle),
+          onDollarClick: onDollarClick,
           onOpen: onOpen,
           onTagClick: onTagClick,
           onUserTagClick: onUserTagClick),
