@@ -30,6 +30,18 @@ class HashTagElement extends SmartTextElement {
   }
 }
 
+/// Represents an element containing a hastag
+class DollarElement extends SmartTextElement {
+  final String dollar;
+
+  DollarElement(this.dollar);
+
+  @override
+  String toString() {
+    return "DollarElement: $dollar";
+  }
+}
+
 /// Represents an element containing a @
 class UserTagElement extends SmartTextElement {
   final String tag;
@@ -59,6 +71,7 @@ final _linkRegex = RegExp(
     caseSensitive: false);
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 final _userTagRegex = RegExp(r"\B@\w*[a-zA-Z]+\w*", caseSensitive: false);
+final _dollarRegex = RegExp(r"\B$\w*[a-zA-Z]+\w*", caseSensitive: false);
 
 /// Turns [text] into a list of [SmartTextElement]
 List<SmartTextElement> _smartify(String text) {
@@ -71,8 +84,10 @@ List<SmartTextElement> _smartify(String text) {
         span.add(LinkElement(word));
       } else if (_tagRegex.hasMatch(word)) {
         span.add(HashTagElement(word));
-      } else if (_userTagRegex.hasMatch(word)) {
-        span.add(UserTagElement(word));
+      } else if (_tagRegex.hasMatch(word)) {
+        span.add(HashTagElement(word));
+      } else if (_dollarRegex.hasMatch(word)) {
+        span.add(DollarElement(word));
       } else {
         span.add(TextElement(word));
       }
@@ -106,6 +121,9 @@ class SmartText extends StatelessWidget {
   /// Style of HashTag text
   final TextStyle tagStyle;
 
+  /// Style of HashTag text
+  final TextStyle dollarStyle;
+
   /// Callback for tapping a link
   final StringCallback onOpen;
 
@@ -115,16 +133,17 @@ class SmartText extends StatelessWidget {
   /// Callback for tapping a user tag
   final StringCallback onUserTagClick;
 
-  const SmartText({
-    Key key,
-    this.text,
-    this.style,
-    this.linkStyle,
-    this.tagStyle,
-    this.onOpen,
-    this.onTagClick,
-    this.onUserTagClick
-  }) : super(key: key);
+  const SmartText(
+      {Key key,
+      this.text,
+      this.style,
+      this.linkStyle,
+      this.tagStyle,
+      this.onOpen,
+      this.onTagClick,
+      this.dollarStyle,
+      this.onUserTagClick})
+      : super(key: key);
 
   /// Raw TextSpan builder for more control on the RichText
   TextSpan _buildTextSpan(
@@ -132,6 +151,7 @@ class SmartText extends StatelessWidget {
       TextStyle style,
       TextStyle linkStyle,
       TextStyle tagStyle,
+      TextStyle dollarStyle,
       StringCallback onOpen,
       StringCallback onTagClick,
       StringCallback onUserTagClick}) {
@@ -156,11 +176,17 @@ class SmartText extends StatelessWidget {
     final elements = _smartify(text);
 
     return TextSpan(
-      children: elements.map<TextSpan>((element) {
+        children: elements.map<TextSpan>((element) {
       if (element is TextElement) {
         return TextSpan(
           text: element.text,
           style: style,
+        );
+      } else if (element is DollarElement) {
+        return LinkTextSpan(
+          text: element.dollar,
+          style: dollarStyle,
+          onPressed: () => _onOpen(element.dollar),
         );
       } else if (element is LinkElement) {
         return LinkTextSpan(
@@ -173,14 +199,14 @@ class SmartText extends StatelessWidget {
           text: element.tag,
           style: tagStyle,
           onPressed: () => _onTagClick(element.tag),
-        );
-      } else if (element is UserTagElement) {
-        return LinkTextSpan(
-          text: element.tag,
-          style: tagStyle,
-          onPressed: () => _onUserTagClick(element.tag),
-        );
-      }
+            );
+          } else if (element is UserTagElement) {
+            return LinkTextSpan(
+              text: element.tag,
+              style: tagStyle,
+              onPressed: () => _onUserTagClick(element.tag),
+            );
+          }
     }).toList());
   }
 
@@ -189,29 +215,36 @@ class SmartText extends StatelessWidget {
     return RichText(
       softWrap: true,
       text: _buildTextSpan(
-        text: text,
-        style: Theme.of(context).textTheme.body1.merge(style),
-        linkStyle: Theme.of(context)
-            .textTheme
-            .body1
-            .merge(style)
-            .copyWith(
-              color: Colors.blueAccent,
-              decoration: TextDecoration.underline,
-            )
-            .merge(linkStyle),
-        tagStyle: Theme.of(context)
-            .textTheme
-            .body1
-            .merge(style)
-            .copyWith(
-              color: Colors.blueAccent,
-            )
-            .merge(linkStyle),
-        onOpen: onOpen,
-        onTagClick: onTagClick,
-        onUserTagClick: onUserTagClick
-      ),
+          text: text,
+          style: Theme.of(context).textTheme.body1.merge(style),
+          linkStyle: Theme.of(context)
+              .textTheme
+              .body1
+              .merge(style)
+              .copyWith(
+                color: Colors.blueAccent,
+                decoration: TextDecoration.underline,
+              )
+              .merge(linkStyle),
+          tagStyle: Theme.of(context)
+              .textTheme
+              .body1
+              .merge(style)
+              .copyWith(
+                color: Colors.blueAccent,
+              )
+              .merge(linkStyle),
+          dollarStyle: Theme.of(context)
+              .textTheme
+              .body1
+              .merge(style)
+              .copyWith(
+                color: Colors.blueAccent,
+              )
+              .merge(linkStyle),
+          onOpen: onOpen,
+          onTagClick: onTagClick,
+          onUserTagClick: onUserTagClick),
     );
   }
 }
