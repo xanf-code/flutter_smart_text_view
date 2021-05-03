@@ -84,8 +84,8 @@ List<SmartTextElement> _smartify(String text) {
         span.add(LinkElement(word));
       } else if (_tagRegex.hasMatch(word)) {
         span.add(HashTagElement(word));
-      } else if (_tagRegex.hasMatch(word)) {
-        span.add(HashTagElement(word));
+      } else if (_userTagRegex.hasMatch(word)) {
+        span.add(UserTagElement(word));
       } else if (_dollarRegex.hasMatch(word)) {
         span.add(DollarElement(word));
       } else {
@@ -241,7 +241,7 @@ class SmartText extends StatelessWidget {
               .copyWith(
                 color: Colors.blueAccent,
               )
-              .merge(linkStyle),
+              .merge(dollarStyle),
           onOpen: onOpen,
           onTagClick: onTagClick,
           onUserTagClick: onUserTagClick),

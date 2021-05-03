@@ -25,6 +25,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c21fe37-c7e9-4bca-8a19-f54198e18645" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/smart_text_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/smart_text_view.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620056071381</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added dollar">
+      <created>1620056094731</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620056094731</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,9 +141,9 @@
       <screen x="1366" y="0" width="1440" height="870" />
     </state>
     <state x="1587" y="80" key="SettingsEditor/0.0.1366.738/1366.0.1440.870@1366.0.1440.870" timestamp="1620055753431" />
-    <state x="1678" y="168" key="Vcs.Push.Dialog.v2" timestamp="1620056082623">
+    <state x="1678" y="168" key="Vcs.Push.Dialog.v2" timestamp="1620056097384">
       <screen x="1366" y="0" width="1440" height="870" />
     </state>
-    <state x="1678" y="168" key="Vcs.Push.Dialog.v2/0.0.1366.738/1366.0.1440.870@1366.0.1440.870" timestamp="1620056082623" />
+    <state x="1678" y="168" key="Vcs.Push.Dialog.v2/0.0.1366.738/1366.0.1440.870@1366.0.1440.870" timestamp="1620056097384" />
   </component>
 </project>
